@@ -32,18 +32,18 @@ def capture_decoder():
         if array_lengthpi != 0:
 
             for i in range(array_lengthpi):
-                matchespi[i] = ",".join( matchespi[i].split() )
+                matchespi[i] = ",".join( matchespi[0].split() )
                 #print(matchespi)
                 #print("sent pi to alg: ", matchespi)
-                return(matchespi)
+            return(matchespi)
 
         elif array_lengthvf != 0:
 
             for i in range(array_lengthvf):
-                matchesvf[i] = ",".join( matchesvf[i].split() )
+                matchesvf[i] = ",".join( matchesvf[0].split() )
                 #print(matchesvf)
                 #print("sent vf to alg: ", matchesvf)
-                return(matchesvf)
+            return(matchesvf)
         else:
             print("no data found")
 
