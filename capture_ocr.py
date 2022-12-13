@@ -17,6 +17,7 @@ def capture_from_image():
 
 def capture_decoder():
     searching_for_text = True
+    capture_decoder_return = 0.00
     while searching_for_text:
         img1 = capture_from_image()
         text = pytesseract.image_to_string(Image.fromarray(img1))
@@ -31,21 +32,36 @@ def capture_decoder():
 
         if array_lengthpi != 0:
 
-            for i in range(array_lengthpi):
-                matchespi[i] = ",".join( matchespi[0].split() )
-                #print(matchespi)
-                #print("sent pi to alg: ", matchespi)
-            return(matchespi)
+            matchespi = matchespi[0].split() 
+            for pulsatility_index in matchespi:
+                try:
+                    float(pulsatility_index)
+                    capture_decoder_return = pulsatility_index
+                    break
+                except ValueError:
+                    #print("Value Error; not a float")
+                    pulsatility_index = "Not a Float"
+            
+            return(capture_decoder_return)
 
         elif array_lengthvf != 0:
 
-            for i in range(array_lengthvf):
-                matchesvf[i] = ",".join( matchesvf[0].split() )
-                #print(matchesvf)
-                #print("sent vf to alg: ", matchesvf)
-            return(matchesvf)
+            #print(matchesvf)
+            matchesvf = matchesvf[0].split() 
+            for volume_flow in matchesvf:
+                try:
+                    float(volume_flow)
+                    capture_decoder_return = volume_flow
+                    break
+                except ValueError:
+                    #print("Value Error; not a float")
+                    volume_flow = "Not a Float"            
+            return(capture_decoder_return)
+
         else:
-            print("no data found")
+            return(capture_decoder_return)
 
 if __name__ == "__main__":
-    capture_decoder()
+    return_val = capture_decoder()
+    #logging.info
+    print("return_val = ", return_val)

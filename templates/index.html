@@ -7,18 +7,21 @@
     <body>
         {% extends "layout.html" %}
         {% block content %}
-        <div class="data_form">
-            {% if name %}
+        {% if name %}
             <h1>Patient {{name}}: </h1>
-            {% endif %}
-            <form method="POST" action="/confirm_data">
-                <input type="submit" value="Confirm">
-            </form>
-            <form method="POST" action="/read_data">
-                <input type="submit" value="Retry">
-            </form>
-            <p>result: {{num}}</p>      
+        {% endif %}
+            <h1>Result: {{num}}</h1> 
+        <div class="data_content_box">
+            <div class = "data_form">
+                <form method="POST" action="/confirm_data">
+                    <input type="submit" value="Confirm">
+                </form>
+                <form method="POST" action="/read_data">
+                    <input type="submit" value="Retry">
+                </form>
+            </div>   
         </div>
+        
         {% endblock %}
     </body>
 </html>
