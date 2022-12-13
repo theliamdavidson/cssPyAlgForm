@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+    <body>
+        {% extends "layout.html" %}
+        {% block content %}
+        <div class="home">
+            <form method="POST" action="/read_data">
+                Name: <input type="text" name="fname" required><br>
+                <input type="submit" value="Submit">
+            </form>
+        </div>
+        {% endblock %}
+    </body>
+</html>

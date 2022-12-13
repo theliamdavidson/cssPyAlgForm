@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>My Page</title>
+    </head>
+    <body>
+        {% extends "layout.html" %}
+        {% block content %}
+        <div class="data_form">
+            {% if name %}
+            <h1>Patient {{name}}: </h1>
+            {% endif %}
+            <form method="POST" action="/confirm_data">
+                <input type="submit" value="Confirm">
+            </form>
+            <form method="POST" action="/read_data">
+                <input type="submit" value="Retry">
+            </form>
+            <p>result: {{num}}</p>      
+        </div>
+        {% endblock %}
+    </body>
+</html>
