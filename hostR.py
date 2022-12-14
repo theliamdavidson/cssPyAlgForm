@@ -19,6 +19,16 @@ def hello():
     return render_template("index.html",
                             name=patient_instance.patient_name)
 
+@app.route('/update_vessel/<string:id>', methods=['POST'])
+def read_vessel_response():
+    if patient_instance.patient_name == "":
+        patient_instance.patient_name = request.form.get("fname")
+    nu_value = capture_decoder()
+    patient_instance.value_holder(nu_value)
+    return render_template("index.html", 
+                            name=patient_instance.patient_name, 
+                            num=nu_value)
+
 @app.route('/confirm_data/', methods=['POST'])
 def confirm_data_response():
     num = request.form.get("num")
