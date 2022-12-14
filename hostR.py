@@ -6,6 +6,7 @@ app = Flask(__name__)
 
 @app.route('/')
 def home():
+    patient_instance.reset_class()
     return render_template('home.html')
 
 @app.route('/about/')
@@ -21,8 +22,9 @@ def hello():
 @app.route('/confirm_data/', methods=['POST'])
 def confirm_data_response():
     num = request.form.get("num")
-    patient_instance.value_holder(num)
+    patient_instance.value_holder(num, True)
     nu_value = capture_decoder()
+    patient_instance.value_holder(nu_value)
     return render_template("index.html", 
                             name=patient_instance.patient_name, 
                             num=nu_value)
@@ -32,6 +34,7 @@ def read_data_response():
     if patient_instance.patient_name == "":
         patient_instance.patient_name = request.form.get("fname")
     nu_value = capture_decoder()
+    patient_instance.value_holder(nu_value)
     return render_template("index.html", 
                             name=patient_instance.patient_name, 
                             num=nu_value)

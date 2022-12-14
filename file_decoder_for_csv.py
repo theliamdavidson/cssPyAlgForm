@@ -9,9 +9,12 @@ class file_parser:
         #print(data_list)
         return data_list
 
-    def csv_creator(self, filedata):
-        sd = pd.DataFrame(filedata,columns=['groupname','data'])
-        
+    def csv_creator(self, filedata, alt = False):
+        if alt is True:
+            print(filedata)
+            sd = pd.DataFrame(filedata,columns=['groupname','data'])
+        else:
+            sd = pd.DataFrame(filedata)
         sd.to_csv(self.file_name+ "_data.csv", encoding='utf-8')
         return("done")
 
