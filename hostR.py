@@ -19,10 +19,13 @@ def hello():
     return render_template("index.html",
                             name=patient_instance.patient_name)
 
-@app.route('/update_vessel/<string:id>', methods=['POST'])
-def read_vessel_response():
+@app.route('/update_vessel', methods=['POST','GET'])
+def change_current_vessel():
     if patient_instance.patient_name == "":
         patient_instance.patient_name = request.form.get("fname")
+    
+    update_vessel = request.form['vessel']
+    print(update_vessel)
     nu_value = capture_decoder()
     patient_instance.value_holder(nu_value)
     return render_template("index.html", 
