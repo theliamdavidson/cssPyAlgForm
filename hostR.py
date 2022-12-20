@@ -23,29 +23,54 @@ def hello():
 def change_current_vessel():  
     patient_instance.temp_vessel_tracker = patient_instance.vessels.index(request.form['vessel'])
     patient_instance.temp_discovered_value_holder = capture_decoder()
+    try:
+        selected_vessel = patient_instance.vessels[patient_instance.temp_vessel_tracker]
+        vessel_index = patient_instance.temp_vessel_tracker
+    except:
+        vessel_index = patient_instance.temp_vessel_tracker - 1
+        selected_vessel = patient_instance.vessels[vessel_index]
     return render_template("index.html", 
+                            selected_vessel = selected_vessel,
                             vessels = patient_instance.vessels,
-                            name=patient_instance.patient_name, 
-                            num=patient_instance.temp_discovered_value_holder)
+                            name = patient_instance.patient_name, 
+                            num = patient_instance.temp_discovered_value_holder, 
+                            current_vessel_values = patient_instance.vessel_values[vessel_index][1])
 
 @app.route('/confirm_data/', methods=['POST'])
 def confirm_data_response():
     patient_instance.value_holder()
     patient_instance.temp_discovered_value_holder = capture_decoder()
+    try:
+        selected_vessel = patient_instance.vessels[patient_instance.temp_vessel_tracker]
+        vessel_index = patient_instance.temp_vessel_tracker
+    except:
+        vessel_index = patient_instance.temp_vessel_tracker - 1
+        selected_vessel = patient_instance.vessels[vessel_index]
     return render_template("index.html", 
+                            selected_vessel = selected_vessel,
                             vessels = patient_instance.vessels,
                             name = patient_instance.patient_name, 
-                            num = patient_instance.temp_discovered_value_holder)
+                            num = patient_instance.temp_discovered_value_holder, 
+                            current_vessel_values = patient_instance.vessel_values[vessel_index][1])
 
 @app.route('/read_data/', methods=['POST'])
 def read_data_response():
     if patient_instance.patient_name == "":
         patient_instance.patient_name = request.form.get("fname")
     patient_instance.temp_discovered_value_holder = capture_decoder()
+    try:
+        selected_vessel = patient_instance.vessels[patient_instance.temp_vessel_tracker]
+        vessel_index = patient_instance.temp_vessel_tracker
+    except:
+        vessel_index = patient_instance.temp_vessel_tracker - 1
+        selected_vessel = patient_instance.vessels[vessel_index]
     return render_template("index.html", 
+                            selected_vessel = selected_vessel,
                             vessels = patient_instance.vessels,
                             name = patient_instance.patient_name, 
-                            num = patient_instance.temp_discovered_value_holder)
+                            num = patient_instance.temp_discovered_value_holder, 
+                            current_vessel_values = patient_instance.vessel_values[vessel_index][1])
+
 
 @app.route('/print_data/', )
 def print_data():
