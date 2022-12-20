@@ -22,58 +22,9 @@
                 <div class="vessel_form">
                     <form method="post" action="{{url_for('change_current_vessel')}}">
                         <select id="vessel" name="vessel">
-                            <option value=0>Right_subclavian</option>
-                            <option value=1>Right_Brachial</option>
-                            <option value=2>Right_Proximal_Radial</option>
-                            <option value=3>Right_Proximal_Ulnar</option>
-                            <option value=4>Right_Distal_Radial</option>
-                            <option value=5>Right_Distal_Ulnar</option>
-                            <option value=6>Right_1st</option>
-                            <option value=7>Right_2nd</option>
-                            <option value=8>Right_3rd</option>
-                            <option value=9>Right_4th</option>
-                            <option value=10>Left_subclavian</option>
-                            <option value=11>Left_Brachial</option>
-                            <option value=12>Left_Proximal_Radial</option>
-                            <option value=13>Left_Proximal_Ulnar</option>
-                            <option value=14>Left_Distal_Radial</option>
-                            <option value=15>Left_Distal_Ulnar</option>
-                            <option value=16>Left_1st</option>
-                            <option value=17>Left_2nd</option>
-                            <option value=18>Left_3rd</option>
-                            <option value=19>Left_4th</option>
-                            <option value=20>Right_Proximal_Pero</option>
-                            <option value=21>Right_Inter_Pero</option>
-                            <option value=22>Right_Low_Pero</option>
-                            <option value=23>Right_Proximal_tib</option>
-                            <option value=24>Right_inter_tib</option>
-                            <option value=25>Right_low_tib</option>
-                            <option value=26>Right_Calc</option>
-                            <option value=27>Right_Med_arch</option>
-                            <option value=28>Right_Lat_arch</option>
-                            <option value=29>Right_MT_cutaneous</option>
-                            <option value=30>Right_1ST</option>
-                            <option value=31>Right_2ND</option>
-                            <option value=32>Right_3RD</option>
-                            <option value=33>Right_4TH</option>
-                            <option value=34>Left_Proximal_Pero</option>
-                            <option value=35>Left_Inter_Pero</option>
-                            <option value=36>Left_Low_Pero</option>
-                            <option value=37>Left_Proximal_tib</option>
-                            <option value=38>Left_inter_tib</option>
-                            <option value=39>Left_low_tib</option>
-                            <option value=40>Left_Calc</option>
-                            <option value=41>Left_Med_arch</option>
-                            <option value=42>Left_Lat_arch</option>
-                            <option value=43>Left_MT_cutaneous</option>
-                            <option value=44>Left_1ST</option>
-                            <option value=45>Left_2ND</option>
-                            <option value=46>Left_3RD</option>
-                            <option value=47>Left_4TH</option>
-                            <option value=48>Left_EI</option>
-                            <option value=49>Lower_Aorta</option>
-                            <option value=50>Upper_Aorta</option>
-                            <option value=51>Right_EI</option>                           
+                            {% for vessel in vessels%}
+                            <option value= "{{vessel}}">{{vessel}}</option>"
+                            {% endfor %}                       
                         </select>
                         <input type="submit" value="Change Vessel">
                     </form>
