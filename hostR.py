@@ -38,7 +38,7 @@ def change_current_vessel():
 
 @app.route('/confirm_data/', methods=['POST'])
 def confirm_data_response():
-    patient_instance.value_holder()
+    patient_instance.value_holder()         #this is where it broke
     patient_instance.temp_discovered_value_holder = capture_decoder()
     try:
         selected_vessel = patient_instance.vessels[patient_instance.temp_vessel_tracker]
