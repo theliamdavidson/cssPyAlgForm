@@ -1,17 +1,14 @@
 from math import sqrt
 from file_decoder_for_csv import file_parser
 from datetime import datetime
-from vessel_math_definitions import Vessel_definition
+from vessel_math_definitions import Vessel_Definition
 
-class Vessel_math(Vessel_definition):
+class Vessel_math(Vessel_Definition):
     def value_holder(self):
         try:
             self.vessel_values[self.temp_vessel_tracker][1]
             local_vessel_index = self.temp_vessel_tracker
         except:
-            #print("a fatal error is about to occur")
-            #print("these are the necessary values")
-            #print("this is the vessel list", self.vessel_values)
             print("this is the vessel iterator", self.temp_vessel_tracker)
             print("this was attempted:", self.temp_vessel_tracker[0])
             try:
@@ -59,7 +56,6 @@ class Vessel_math(Vessel_definition):
         sampSize = len(data)
         sum = 0.0
         standardDeviation = 0.0
-
         for i in range(sampSize):
             data[i] = float(data[i])
             sum += data[i]
@@ -94,6 +90,13 @@ class Vessel_math(Vessel_definition):
             # these values WILL be changed, so likley rewrite to come shortly            
         return(return_list)                         # will return two floats, left first
 
+    def place_value(self, macro_results):
+        for i, sublist in enumerate(self.macro_vessel_results):
+            for group_names in macro_results:
+                print("sublist",sublist,"groupnames",group_names)
+                if group_names[0] in sublist:
+                    self.macro_vessel_results[i] = group_names
+
     def macro_vessel_calculations(self):
         '''
         takes bvg2 results from artery_tests, and performs additional calculations on them
@@ -119,7 +122,7 @@ class Vessel_math(Vessel_definition):
                 bet_w = ["bet_" + parings[0], value_list[0]]             # pairings[0] is the name of the group, this formats them nicely and returns them
                 three_t = ["T_" + parings[0], value_list[1]]
                 send_to_main.append([parings[0],bet_w,three_t])
-        return(send_to_main)
+        self.place_value(send_to_main)
 
 if __name__ == "__main__":
     print("wrong file loaded; this file is intended to be a helper")

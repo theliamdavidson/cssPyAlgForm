@@ -71,6 +71,12 @@ def read_data_response():
                             num = patient_instance.temp_discovered_value_holder, 
                             current_vessel_values = patient_instance.vessel_values[vessel_index][1])
 
+@app.route('/results/', methods=['GET','POST'])
+def results():
+    patient_instance.macro_vessel_calculations()
+    return render_template("results.html", 
+                            macro_vessel_values = patient_instance.macro_vessel_results, 
+                            name=patient_instance.patient_name)
 
 @app.route('/print_data/', )
 def print_data():
