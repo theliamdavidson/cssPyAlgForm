@@ -4,13 +4,20 @@ from datetime import datetime
 from vessel_math_definitions import Vessel_Definition
 
 class Vessel_math(Vessel_Definition):
+    def __init__(self):
+        super().__init__()
+        time_created = datetime.now().strftime("%m_%d_%y-%H_%M")
+        self.csv_sendr = file_parser(time_created)
     def value_holder(self):
         try:
             self.vessel_values[self.temp_vessel_tracker][1]
             local_vessel_index = self.temp_vessel_tracker
         except:
+            if self.temp_vessel_tracker > 52:
+                print(self.temp_vessel_tracker)
+                #return("done")
             print("this is the vessel iterator", self.temp_vessel_tracker)
-            print("this was attempted:", self.temp_vessel_tracker[0])
+            print("this was attempted:", self.temp_vessel_tracker)
             try:
                 local_vessel_index = self.temp_vessel_tracker - 1
                 self.vessel_values[local_vessel_index][1]
@@ -52,7 +59,7 @@ class Vessel_math(Vessel_Definition):
         return (rounded_digits)
 
     def stand_dev(self, data):
-        #data.pop(0)             # remove vessel name
+        data.pop(0)             # remove vessel name
         sampSize = len(data)
         sum = 0.0
         standardDeviation = 0.0
@@ -90,12 +97,13 @@ class Vessel_math(Vessel_Definition):
             # these values WILL be changed, so likley rewrite to come shortly            
         return(return_list)                         # will return two floats, left first
 
-    def place_value(self, macro_results):
+    def place_macro_value(self, macro_results):
         for i, sublist in enumerate(self.macro_vessel_results):
             for group_names in macro_results:
                 print("sublist",sublist,"groupnames",group_names)
                 if group_names[0] in sublist:
                     self.macro_vessel_results[i] = group_names
+                    print(self.macro_vessel_results[i])
 
     def macro_vessel_calculations(self):
         '''
@@ -114,6 +122,7 @@ class Vessel_math(Vessel_Definition):
         send_to_main = []
         
         for parings in self.group_pairings:
+            print(parings)
             value_list = self.vessel_group_value_constructor(parings[1:])
             if value_list is not None:
                 print("value list b4", value_list)
@@ -122,7 +131,7 @@ class Vessel_math(Vessel_Definition):
                 bet_w = ["bet_" + parings[0], value_list[0]]             # pairings[0] is the name of the group, this formats them nicely and returns them
                 three_t = ["T_" + parings[0], value_list[1]]
                 send_to_main.append([parings[0],bet_w,three_t])
-        self.place_value(send_to_main)
+        self.place_macro_value(send_to_main)
 
 if __name__ == "__main__":
     print("wrong file loaded; this file is intended to be a helper")
