@@ -78,7 +78,7 @@ def results():
                             macro_vessel_values = patient_instance.macro_vessel_results, 
                             name=patient_instance.patient_name)
 
-@app.route('/print_data/', )
+@app.route('/print_data/', methods=['GET','POST'])
 def print_data():
     patient_instance.bvg_2_csv_file()
     return render_template("index.html", 

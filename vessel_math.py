@@ -47,12 +47,13 @@ class Vessel_math(Vessel_Definition):
 
     def bvg_2_csv_file(self, data=None):
         if data is not None:
-            #data.append(self.patient_name)
-            self.csv_sendr.csv_creator(data)
-            return "done"
+            tf = False 
         else:
-            self.csv_sendr.csv_creator(self.vessel_bvg2,True)
-            print(self.vessel_bvg2)
+            tf = True
+            data = self.macro_vessel_results
+
+        print(self.macro_vessel_results)
+        self.csv_sendr.csv_creator(data,tf)
 
     def float_2_rounded_return(self, digits):
         rounded_digits = round( (float(digits)) *100) / 100
