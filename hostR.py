@@ -9,6 +9,11 @@ def home():
     patient_instance.__init__()
     return render_template('home.html')
 
+@app.route('/home')
+def althome():
+    patient_instance.__init__()
+    return render_template('home.html')
+
 @app.route('/about/')
 def about():
     return render_template('about.html')
@@ -80,9 +85,15 @@ def results():
 
 @app.route('/print_data/', methods=['GET','POST'])
 def print_data():
-    patient_instance.bvg_2_csv_file()
-    return render_template("index.html", 
-                            name=patient_instance.patient_name)
+    completed = patient_instance.bvg_2_csv_file()
+    if completed is True:
+        success = ""
+    else:
+        success = "not "
+    success += "successful"
+    return render_template("print_result.html", 
+                            name=patient_instance.patient_name,
+                            success=success)
 
 if __name__ == '__main__':
     patient_instance = vessel_math.Vessel_math()

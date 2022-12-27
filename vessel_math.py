@@ -23,7 +23,7 @@ class Vessel_math(Vessel_Definition):
                 self.vessel_values[local_vessel_index][1]
             except:
                 print("a fatal error is about to occur, the workaround failed")
-                print("this vessel was accessed", local_vessel_index[0])
+                print("this vessel was accessed", local_vessel_index)
                 print("original iter:", self.temp_vessel_tracker, "modified:", local_vessel_index)
         vessel_list = self.vessel_values[local_vessel_index][1]
         for count, value in enumerate(vessel_list):
@@ -46,14 +46,28 @@ class Vessel_math(Vessel_Definition):
         return("vessel done")
 
     def bvg_2_csv_file(self, data=None):
+        send_data = []
         if data is not None:
-            tf = False 
+            is_patient_data = False 
+            send_data = data
         else:
-            tf = True
-            data = self.macro_vessel_results
-
+            is_patient_data = True
+            data_2_send = False
+            for groups in self.macro_vessel_results:
+                try:
+                    print((groups[1]))
+                    print(groups[2])
+                    send_data.append(groups[1])
+                    send_data.append(groups[2])
+                    data_2_send = True
+                except:
+                    print("not completed:", groups)
+        if data_2_send is not True:
+            return(False)
         print(self.macro_vessel_results)
-        self.csv_sendr.csv_creator(data,tf)
+        print(send_data)
+        self.csv_sendr.csv_creator(send_data,is_patient_data)
+        return(True)
 
     def float_2_rounded_return(self, digits):
         rounded_digits = round( (float(digits)) *100) / 100
