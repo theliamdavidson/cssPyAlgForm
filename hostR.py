@@ -97,4 +97,4 @@ def print_data():
 
 if __name__ == '__main__':
     patient_instance = vessel_math.Vessel_math()
-    app.run(debug=True)
+    app.run(host='0.0.0.0')
