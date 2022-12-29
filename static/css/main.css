@@ -26,8 +26,16 @@ header h1.logo:hover {
   text-decoration: none;
 }
 
+
+.header_container {
+  width: fit-content(20em);
+  margin: 0 auto;
+  font-family: Arial,sans-serif;
+  color: #fff;
+  background: linear-gradient(132deg,#3d1d5c,#337CB6 100%);
+}
 .container {
-  width: 1200px;
+  width: 65%;
   margin: 0 auto;
   font-family: Arial,sans-serif;
   color: #fff;
@@ -60,7 +68,7 @@ input[type=submit]{
   margin-right: 10px;
 }
 div.data_form{
-  width: 800px;
+  width: 50%;
   margin: auto;
   display: inline;
 }
