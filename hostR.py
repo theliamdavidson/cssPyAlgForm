@@ -21,6 +21,7 @@ def about():
 @app.route('/index/')
 def hello():
     patient_instance.patient_name = request.form.get("fname")
+    patient_instance.PID = request.form.get("pid")
     return render_template("index.html",
                             name=patient_instance.patient_name)
 
