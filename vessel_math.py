@@ -85,7 +85,7 @@ class Vessel_math(Vessel_Definition):
         for i in range(sampSize):
             standardDeviation += pow(data[i] - mean, 2)
 
-        return sqrt(standardDeviation/sampSize)
+        return sqrt(standardDeviation/sampSize) 
 
     def completed_checker(self, index):
         returnlist = []
@@ -114,20 +114,14 @@ class Vessel_math(Vessel_Definition):
                 if groups in data:
                     list_holder = self.completed_checker(index) # must check that the vessel group was completed
                     if list_holder is not None:                 # as the parent function can be called at any time              
-                        stdev_list = list_holder           # otherwise, disregard the whole group
+                        stdev_list = list_holder                # otherwise, disregard the whole group
             if stdev_list == []:
                 return(return_list)
             vessel_name = stdev_list[0]
-            if vessel_name in self.AV_Values:
-                return_list.append(self.AV_exception(stdev_list))
-                print("we are in the AV_exception")
+            
             vessel_variance = self.vessel_variance(self.stand_dev(stdev_list), vessel_name)
-            if vessel_name in self.AV_Values:
-                self.temp_holder.append(vessel_variance)
             return_list.append(vessel_variance)
-            #print("rlist",return_list)
-            # add to the return_list: the varience and the standard deviation of each group's vessels
-            # these values WILL be changed, so likley rewrite to come shortly            
+            # add to the return_list: the varience and the standard deviation of each group's vessels       
         return(return_list)                         # will return two floats, left first
 
     def place_macro_value(self, macro_results):
@@ -136,7 +130,25 @@ class Vessel_math(Vessel_Definition):
                 #print("sublist",sublist,"groupnames",group_names)
                 if group_names[0] in sublist:
                     self.macro_vessel_results[i] = group_names
-                    #print(self.macro_vessel_results[i])
+
+    def AV_Ratio_calculator(self):
+        varience_data_holder = [None, None, None, None]
+        av_values = ["LUE_lg_var", "RUE_lg_var", "LLE_lg_var", "RLE_lg_var"] # av values acts as a key for varience data holder
+        found = 0
+        for groups in self.vessel_variences:
+            if av_values[found] in groups[0]:
+                index = av_values.index(groups[0])
+                varience_data_holder[index] = groups[1][1]
+                found += 1
+                if found == 4:
+                    break
+            # store in varience_data_holder, at the position of the found vessel, the data for the found vessel.
+        return(self.vessel_variance(self.stand_dev(varience_data_holder), "AV_Ratio"))
+
+    def nvi_finder_loop(self, vessel):
+        for groups in self.macro_vessel_results:
+            if groups[0] == vessel:
+                return groups[2][1]
 
     def macro_vessel_calculations(self):
             '''
@@ -156,9 +168,15 @@ class Vessel_math(Vessel_Definition):
             
             for parings in self.group_pairings:
                 print("group name", parings[0])
-                #if parings[0]
-                value_list = self.vessel_group_value_constructor(parings[1:])
-                print("value list", value_list)
+                if "AV_Ratio" in parings:
+                    value_list = self.vessel_group_value_constructor([parings[1],"AV_Standin"])
+                    value_list.append(self.AV_Ratio_calculator())
+                    print("values:", value_list, "av:", self.AV_Ratio_calculator())
+                    
+                else:
+                    value_list = self.vessel_group_value_constructor(parings[1:])
+                    print("value list", value_list)
+
                 if value_list is not None:
                     #print("value list b4", value_list)
                     value_list = self.comp_funcs(value_list)
@@ -168,6 +186,7 @@ class Vessel_math(Vessel_Definition):
                     send_to_main.append([parings[0],bet_w,three_t])
             self.place_macro_value(send_to_main)
             return(send_to_main)
+
 
 if __name__ == "__main__":
     print("wrong file loaded; this file is intended to be a helper")
