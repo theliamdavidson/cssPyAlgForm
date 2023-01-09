@@ -86,7 +86,7 @@ def results():
 
 @app.route('/print_data/', methods=['GET','POST'])
 def print_data():
-    patient_instance.neurovascular_index()
+    #patient_instance.neurovascular_index()
     completed = patient_instance.bvg_2_csv_file()
     if completed is True:
         success = ""

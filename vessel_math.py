@@ -45,28 +45,23 @@ class Vessel_math(Vessel_Definition):
         
         return("vessel done")
 
-    def bvg_2_csv_file(self, data=None):
+    def bvg_2_csv_file(self):
         send_data = []
-        if data is not None:
-            is_patient_data = False 
-            send_data = data
-        else:
-            is_patient_data = True
-            data_2_send = False
-            for groups in self.macro_vessel_results:
-                try:
-                    print((groups[1]))
-                    print(groups[2])
-                    send_data.append(groups[1])
-                    send_data.append(groups[2])
-                    data_2_send = True
-                except:
-                    print("not completed:", groups)
-        if data_2_send is not True:
-            return(False)
-        print(self.macro_vessel_results)
-        print(send_data)
-        self.csv_sendr.csv_creator(send_data,is_patient_data)
+        file_parser.output_file(self.patient_name,self.PID)
+        #for groups in self.macro_vessel_results:
+        #    try:
+        #        print((groups[1]))
+        #        print(groups[2])
+        #        send_data.append(groups[1])
+        #        send_data.append(groups[2])
+        #        data_2_send = True
+        #    except:
+        #        print("not completed:", groups)
+        #if data_2_send is not True:
+        #    return(False)
+        #print(self.macro_vessel_results)
+        #print(send_data)
+        #self.csv_sendr.csv_creator(send_data)
         return(True)
 
     def float_2_rounded_return(self, digits):
@@ -165,26 +160,28 @@ class Vessel_math(Vessel_Definition):
 
             ##--------------------- and group
             send_to_main = []
-            
-            for parings in self.group_pairings:
-                print("group name", parings[0])
-                if "AV_Ratio" in parings:
-                    value_list = self.vessel_group_value_constructor([parings[1],"AV_Standin"])
-                    value_list.append(self.AV_Ratio_calculator())
-                    print("values:", value_list, "av:", self.AV_Ratio_calculator())
-                    
-                else:
-                    value_list = self.vessel_group_value_constructor(parings[1:])
-                    print("value list", value_list)
+            try:
+                for parings in self.group_pairings:
+                    print("group name", parings[0])
+                    if "AV_Ratio" in parings:
+                        value_list = self.vessel_group_value_constructor([parings[1],"AV_Standin"])
+                        value_list.append(self.AV_Ratio_calculator())
+                        print("values:", value_list, "av:", self.AV_Ratio_calculator())
+                        
+                    else:
+                        value_list = self.vessel_group_value_constructor(parings[1:])
+                        print("value list", value_list)
 
-                if value_list is not None:
-                    #print("value list b4", value_list)
-                    value_list = self.comp_funcs(value_list)
-                    #print("value list aft", value_list)
-                    bet_w = ["bet_" + parings[0], value_list[0]]             # pairings[0] is the name of the group, this formats them nicely and returns them
-                    three_t = ["T_" + parings[0], value_list[1]]
-                    send_to_main.append([parings[0],bet_w,three_t])
-            self.place_macro_value(send_to_main)
+                    if value_list is not None:
+                        #print("value list b4", value_list)
+                        value_list = self.comp_funcs(value_list)
+                        #print("value list aft", value_list)
+                        bet_w = ["bet_" + parings[0], value_list[0]]             # pairings[0] is the name of the group, this formats them nicely and returns them
+                        three_t = ["T_" + parings[0], value_list[1]]
+                        send_to_main.append([parings[0],bet_w,three_t])
+                self.place_macro_value(send_to_main)
+            except:
+                send_to_main = "error in macro_vessel_calculations"
             return(send_to_main)
 
 
