@@ -69,6 +69,11 @@ class Vessel_math(Vessel_Definition):
             return (rounded_digits)
 
     def stand_dev(self, data):
+        if data[0] in self.arterial_control_builder:
+            store = True
+            name = data[0]
+        else:
+            store = False
         data.pop(0)             # remove vessel name
         sampSize = len(data)
         sum = 0.0
@@ -79,7 +84,8 @@ class Vessel_math(Vessel_Definition):
         mean = sum/sampSize
         for i in range(sampSize):
             standardDeviation += pow(data[i] - mean, 2)
-
+        if store == True:
+            self.arterial_control_holder.append([name, sqrt(standardDeviation/sampSize)])
         return sqrt(standardDeviation/sampSize) 
 
     def completed_checker(self, index):
