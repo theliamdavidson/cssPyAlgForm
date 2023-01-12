@@ -6,8 +6,7 @@ from vessel_math_definitions import Vessel_Definition
 class Vessel_math(Vessel_Definition):
     def __init__(self):
         super().__init__()
-        time_created = datetime.now().strftime("%m_%d_%y-%H_%M")
-        self.csv_sendr = file_parser(time_created)
+        
     def value_holder(self):
         try:
             self.vessel_values[self.temp_vessel_tracker][1]
@@ -47,7 +46,7 @@ class Vessel_math(Vessel_Definition):
 
     def bvg_2_csv_file(self):
         send_data = []
-        file_parser.output_file(self.patient_name,self.PID)
+       
         #for groups in self.macro_vessel_results:
         #    try:
         #        print((groups[1]))
@@ -86,6 +85,7 @@ class Vessel_math(Vessel_Definition):
             standardDeviation += pow(data[i] - mean, 2)
         if store == True:
             self.arterial_control_holder.append([name, sqrt(standardDeviation/sampSize)])
+            self.arterial_control_builder.remove(name)
         return sqrt(standardDeviation/sampSize) 
 
     def completed_checker(self, index):
@@ -189,6 +189,7 @@ class Vessel_math(Vessel_Definition):
             except:
                 send_to_main = "error in macro_vessel_calculations"
             return(send_to_main)
+
 
 
 if __name__ == "__main__":
