@@ -45,7 +45,6 @@ class Vessel_math(Vessel_Definition):
         return("vessel done")
 
     def bvg_2_csv_file(self):
-        send_data = []
         print(self.file_output)
         file_parser.output_file(self.file_output, self.patient_name, self.PID)
         return(True)
