@@ -46,21 +46,8 @@ class Vessel_math(Vessel_Definition):
 
     def bvg_2_csv_file(self):
         send_data = []
-       
-        #for groups in self.macro_vessel_results:
-        #    try:
-        #        print((groups[1]))
-        #        print(groups[2])
-        #        send_data.append(groups[1])
-        #        send_data.append(groups[2])
-        #        data_2_send = True
-        #    except:
-        #        print("not completed:", groups)
-        #if data_2_send is not True:
-        #    return(False)
-        #print(self.macro_vessel_results)
-        #print(send_data)
-        #self.csv_sendr.csv_creator(send_data)
+        print(self.file_output)
+        file_parser.output_file(self.file_output, self.patient_name, self.PID)
         return(True)
 
     def float_2_rounded_return(self, digits):

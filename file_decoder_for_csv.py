@@ -18,9 +18,9 @@ class file_parser:
         sd.to_csv(self.file_name+ "_data.csv", encoding='utf-8')
         return("done")
 
-    def output_file(data, patient_name, pid):
-        data_list = [patient_name, pid, "1/9/23", "", ""]   # replace with date
-        data_list += data                                   # need 130 more rows in data, real or ""
+    def output_file(data, patient_name, pid, date = "1/9/23"):
+        data_list = [patient_name, pid, date, "", ""]   # replace with date
+        data_list += data                                   
         df = pd.read_csv('Outputfile.csv')
         df.columns = ['identifiers','data','expected_vals']
         data_dataframe = pd.DataFrame(data_list, columns=['data'])
